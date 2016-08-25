@@ -1,4 +1,5 @@
 #include "crenderutils.h"
+#include "window.h"
 
 //this is my branch
 //there are many like it
@@ -6,8 +7,11 @@
 
 void main()
 {
-	//tryin to change
-	test();
+	Window window;
+	window.init();
 
+	while (window.step());
+	
+	window.term();
 	return;
 }
