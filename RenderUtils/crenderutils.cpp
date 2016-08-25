@@ -48,3 +48,43 @@ void freeGeomentry(Geomentry &geo)
 
 	geo = { 0,0,0,0 };
 }
+
+Shader makeShader(const char * vsource, const char * fsource)
+{
+	Shader retval;
+
+	retval.handle = glCreateProgram();
+	//create our var
+	unsigned vs = glCreateShader(GL_VERTEX_SHADER);
+	unsigned fs = glCreateShader(GL_FRAGMENT_SHADER);
+	//init our var
+	glShaderSource(vs, 1, &vsource, 0);
+	glShaderSource(fs, 1, &fsource, 0);
+	//compile shader
+	glCompileShader(vs);
+	glCompileShader(fs);
+	//link the shaders into a single program
+	glAttachShader(retval.handle, vs);
+	glAttachShader(retval.handle, fs);
+	glLinkProgram(retval.handle);
+	//no longer need em
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+
+	return retval;
+}
+
+void freeShader(Shader &slade)
+{
+	glDeleteProgram(slade.handle);
+	slade.handle = 0;
+}
+
+void draw(const Geomentry &geo, const Shader &sad)
+{
+	glUseProgram(sad.handle);
+	glBindVertexArray(geo.vao);
+
+	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
+
+}
