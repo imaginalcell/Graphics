@@ -28,10 +28,10 @@ bool Window::step()
 {
 	if (!isInitialized) return false;
 	
-	glClear(GL_COLOR_BUFFER_BIT);
-	
 	glfwPollEvents();
 	glfwSwapBuffers(winHandle);
+	glClear(GL_COLOR_BUFFER_BIT);
+
 	return !glfwWindowShouldClose(winHandle);
 }
 

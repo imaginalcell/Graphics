@@ -1,6 +1,6 @@
 #pragma once
 
-struct  Geomentry
+struct  Geometry
 {
 	//vertex buffer object: array of vertices
 	//index buffer object : array of indeices (triangles)
@@ -9,10 +9,10 @@ struct  Geomentry
 
 	unsigned vao, vbo, ibo, size;
 };
-Geomentry makeGeomentry(const struct Vertex *verts, size_t vsize,
+Geometry makeGeometry(const struct Vertex *verts, size_t vsize,
 						const unsigned int *tris, size_t tsize);
 
-void freeGeomontry(Geomentry &);
+void freeGeometry(Geometry &);
 
 
 struct Shader
@@ -23,4 +23,4 @@ Shader makeShader(const char *vsource, const char *fsource);
 
 void freeShader(Shader &);
 
-void draw(const Geomentry &, const Shader &);
+void draw(const Geometry &, const Shader &);

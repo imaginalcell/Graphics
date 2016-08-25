@@ -5,15 +5,14 @@
 #include "Vertex.h"
 #include "crenderutils.h"
 
-Geomentry makeGeomentry(const Vertex * verts, size_t vsize, const unsigned int * tris, size_t tsize)
+Geometry makeGeometry(const Vertex * verts, size_t vsize, const unsigned int * tris, size_t tsize)
 {
-	Geomentry retval;
-	retval.size = tsize;
-
+	Geometry retval;
+	
 	//define the var
-	glCreateBuffers(1, &retval.vbo);
-	glCreateBuffers(1, &retval.ibo);
-	glCreateVertexArrays(1, &retval.vao);
+	glGenBuffers(1, &retval.vbo);
+	glGenBuffers(1, &retval.ibo);
+	glGenVertexArrays(1, &retval.vao);
 	
 	//scope the var
 	glBindVertexArray(retval.vao);
@@ -36,11 +35,11 @@ Geomentry makeGeomentry(const Vertex * verts, size_t vsize, const unsigned int *
 	glBindVertexArray(0);
 	glBindBuffer(GL_ARRAY_BUFFER ,0);
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER ,0);
-	
+	retval.size = tsize;
 	return retval;
 }
 
-void freeGeomentry(Geomentry &geo)
+void freeGeometry(Geometry &geo)
 {
 	glDeleteBuffers(1, &geo.vbo);
 	glDeleteBuffers(1, &geo.ibo);
@@ -80,7 +79,7 @@ void freeShader(Shader &slade)
 	slade.handle = 0;
 }
 
-void draw(const Geomentry &geo, const Shader &sad)
+void draw(const Geometry &geo, const Shader &sad)
 {
 	glUseProgram(sad.handle);
 	glBindVertexArray(geo.vao);
