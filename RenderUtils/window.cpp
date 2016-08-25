@@ -19,7 +19,8 @@ bool Window::init(int a_width, int a_height, char * a_title)
 
 	glewExperimental = true;
 	glewInit();
-	glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+	//            R     G     B   alpha
+	glClearColor(0.0f, 0.1f, 0.2f, 1.0f);
 	return true;
 }
 
