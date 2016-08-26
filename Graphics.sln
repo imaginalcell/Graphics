@@ -5,7 +5,7 @@ VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "RenderUtils", "RenderUtils\RenderUtils.vcxproj", "{DEADD501-BF44-4E9B-A7F1-B91C174622B0}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Triang;eTest", "triangleterst\triangleterst.vcxproj", "{F9E79A60-7F63-44CA-AA29-F503B641CEE3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TriangleTest", "triangleterst\triangleterst.vcxproj", "{F9E79A60-7F63-44CA-AA29-F503B641CEE3}"
 	ProjectSection(ProjectDependencies) = postProject
 		{DEADD501-BF44-4E9B-A7F1-B91C174622B0} = {DEADD501-BF44-4E9B-A7F1-B91C174622B0}
 	EndProjectSection
