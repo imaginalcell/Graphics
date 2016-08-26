@@ -72,6 +72,7 @@ void main()
 	//second
 	freeGeometry(joker);
 	freeShader(batman);
+
 	window.term();
 	return;
 }
