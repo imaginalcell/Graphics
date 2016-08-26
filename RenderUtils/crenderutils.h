@@ -21,6 +21,8 @@ struct Shader
 };
 Shader makeShader(const char *vsource, const char *fsource);
 
+Shader loadShadder(const char *vpath, const char *fpath);
+
 void freeShader(Shader &);
 
 void draw(const Geometry &, const Shader &);

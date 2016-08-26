@@ -73,6 +73,12 @@ Shader makeShader(const char * vsource, const char * fsource)
 	return retval;
 }
 
+Shader loadShadder(const char * vpath, const char * fpath)
+{
+	//return makeShader(,);
+	return Shader();
+}
+
 void freeShader(Shader &slade)
 {
 	glDeleteProgram(slade.handle);

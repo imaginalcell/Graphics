@@ -6,6 +6,9 @@
 //there are many like it
 //but this branch is my branch
 
+//path for shaders
+//		../res/shaders/simpleFrag
+//		../res/shaders/simpleVert
 void main()
 {
 	Window window;
@@ -33,12 +36,14 @@ void main()
 	Geometry geo = makeGeometry(vert , 3, tris, 3);
 	Shader	 shade = makeShader(vsource, fsource);
 
+	Shader shadow = loadShadder("../res/shaders/simpleVert","../res/shaders/simpleVFrag");
 
-	Vertex n00b[3] = {  {0,1,.5f,1, 0,1,1,0,}, 
-						{-1,1,-.5f,1, 1,0,0,1}, 
-						{.5,1,-.5f,1, 1,1,0,0} };
 
-	unsigned neeb[3] = {1,3,5};
+	Vertex n00b[3] = {  {0,.5f,0,1, 0,1,1,1,}, 
+						{.5f,-.5f,0,1, 1,0,0,1}, 
+						{.5,.5f,0,1, 1,1,0,1} };
+
+	unsigned neeb[3] = {0,1,2};
 
 	const char sourcev[] =
 		"#version 330\n"
