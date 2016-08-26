@@ -2,12 +2,12 @@
 
 struct  Geometry
 {
+	unsigned vao, vbo, ibo, size;
 	//vertex buffer object: array of vertices
 	//index buffer object : array of indeices (triangles)
 	//vertex arrat object : groups the two with some formatting
 	//size				  : number rof triangles
 
-	unsigned vao, vbo, ibo, size;
 };
 Geometry makeGeometry(const struct Vertex *verts, size_t vsize,
 						const unsigned int *tris, size_t tsize);
