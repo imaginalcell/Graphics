@@ -30,22 +30,43 @@ void main()
 		"out vec4 outColor;"
 		"void main() {outColor = vColor;}";
 
-	Geometry geoff = makeGeometry(vert , 3, tris, 3);
-	Shader	  shade = makeShader(vsource, fsource);
+	Geometry geo = makeGeometry(vert , 3, tris, 3);
+	Shader	 shade = makeShader(vsource, fsource);
+
 
 	Vertex n00b[3] = {  {0,1,.5f,1, 0,1,1,0,}, 
 						{-1,1,-.5f,1, 1,0,0,1}, 
-						{.5,1,-.5f,1,  1,1,0,0} };
+						{.5,1,-.5f,1, 1,1,0,0} };
 
-	unsigned neeb[3] = {3,4,5};
+	unsigned neeb[3] = {1,3,5};
+
+	const char sourcev[] =
+		"#version 330\n"
+		"layout(location =0)in vec4 pos;"
+		"layout(location =1)in vec4 col;"
+		"out vec4 vCol;"
+		"void main() {vCol = col; gl_Position = pos;}";
+
+	const char sourcef[] =
+		"#version 150\n"
+		"in vec4 vCol;"
+		"out vec4 outCol;"
+		"void main() {outCol = vCol;}";
+
+	Geometry joker = makeGeometry(n00b,3,neeb,3);
+	Shader batman = makeShader(sourcev, sourcef);
 
 	while (window.step())
 	{
-		draw(geoff, shade);
+		draw(geo, shade);
+		draw(joker, batman);
 	}
-	
-	freeGeometry(geoff);
+	//first
+	freeGeometry(geo);
 	freeShader(shade);
+	//second
+	freeGeometry(joker);
+	freeShader(batman);
 	window.term();
 	return;
 }
