@@ -33,6 +33,12 @@ void main()
 	Geometry geoff = makeGeometry(vert , 3, tris, 3);
 	Shader	  shade = makeShader(vsource, fsource);
 
+	Vertex n00b[3] = {  {0,1,.5f,1, 0,1,1,0,}, 
+						{-1,1,-.5f,1, 1,0,0,1}, 
+						{.5,1,-.5f,1,  1,1,0,0} };
+
+	unsigned neeb[3] = {3,4,5};
+
 	while (window.step())
 	{
 		draw(geoff, shade);
