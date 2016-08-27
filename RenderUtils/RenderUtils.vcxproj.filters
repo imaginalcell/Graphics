@@ -21,6 +21,9 @@
     <ClCompile Include="window.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Galley.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="crenderutils.h">
@@ -30,6 +33,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vertex.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Galley.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="globjects.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

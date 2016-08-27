@@ -121,10 +121,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="crenderutils.cpp" />
+    <ClCompile Include="Galley.cpp" />
     <ClCompile Include="window.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="crenderutils.h" />
+    <ClInclude Include="Galley.h" />
+    <ClInclude Include="globjects.h" />
     <ClInclude Include="Vertex.h" />
     <ClInclude Include="window.h" />
   </ItemGroup>

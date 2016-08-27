@@ -16,7 +16,7 @@ void main()
 
 	Vertex   vert[3] = { { 0,.5f,0,1, 1,0,0,1 },
 						{.5f,-.5f,0,1, 0,1,0,1},
-						{-.5f,-.5f,0,1, 0,1,1,1 } };
+						{-.5f,-.5f,0,1, 0,1,1,1 }};
 
 	unsigned tris[3] = { 0,1,2 };
 
@@ -36,7 +36,7 @@ void main()
 	Geometry geo = makeGeometry(vert , 3, tris, 3);
 	Shader	 shade = makeShader(vsource, fsource);
 
-	Shader shadow = loadShadder("../res/shaders/simpleVert","../res/shaders/simpleVFrag");
+	Shader shadow = loadShader("../res/shaders/simpleVert.txt","../res/shaders/simpleFrag.txt");
 
 
 	Vertex n00b[3] = {  {0,.5f,0,1, 0,1,1,1,}, 
