@@ -16,8 +16,14 @@ void FreeShader(Shader &);
 
 Shader LoadShader(const char *vpath, const char *fpath);
 
+Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char * pixel);
+Texture loadTexture(const char * path);
+void freeTexture(Texture &t);
+
 void Draw(const Shader &, const Geometry &);
 
 void Draw(const Shader &, const Geometry &, float time);
 
 void Draw(const Shader &, const Geometry &, const float m[16], const float v[16], const float p[16], float color2);
+
+void Draw(const Shader &s, const Geometry &g, const Texture &t, const float m[16], const float v[16], const float p[16]);

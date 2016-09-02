@@ -11,6 +11,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "TriangleTest", "triangleter
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CameraTest", "CameraTest\CameraTest.vcxproj", "{F0E0FF15-1794-4081-9B76-DBCD8315C6E1}"
+	ProjectSection(ProjectDependencies) = postProject
+		{DEADD501-BF44-4E9B-A7F1-B91C174622B0} = {DEADD501-BF44-4E9B-A7F1-B91C174622B0}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

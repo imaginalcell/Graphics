@@ -24,9 +24,14 @@ void main()
 
 	gallery.LoadObjectOBJ("Sphere", "../res/models/sphere.obj");
 	gallery.LoadObjectOBJ("Cube", "../res/models/cube.obj");
-	gallery.LoadObjectOBJ("Crystal", "../res/models/crystal.obj");
-	gallery.LoadShader("Simple", "../res/shaders/SimpleVert.txt", "../res/shaders/SimpleFrag.txt");
-	gallery.LoadShader("SimpleCamera", "../res/shaders/CameraVert.txt", "../res/shaders/CameraFrag.txt");
+	//gallery.LoadShader("Simple", "../res/shaders/SimpleVert.txt", "../res/shaders/SimpleFrag.txt");
+	gallery.LoadShader("SimpleCamera", "../res/shaders/SimpleCameraVert.txt", "../res/shaders/SimpleCameraFrag.txt");
+
+	//unsigned char p[] = { 255, 255, 0 };
+
+	//Texture tex = makeTexture( 1, 1, 0x1907, p );
+
+	Texture tex = loadTexture("../res/textures/bigmisssteak.png");
 
 	glm::mat4 proj, view, model, model2, model3;
 	//proj = glm::ortho<float>(-10, 10, -10, 10, -10, 10);
@@ -66,20 +71,17 @@ void main()
 
 		model3 = glm::translate(glm::vec3(3, 0, 3)) * glm::rotate(ct, glm::vec3(0, 1, 0));
 
-		Draw(gallery.GetShader("SimpleCamera"), gallery.GetObject("Cube"),
+		Draw(gallery.GetShader("SimpleCamera"), gallery.GetObject("Cube"), tex,
 			glm::value_ptr(model),
 			glm::value_ptr(view),
-			glm::value_ptr(proj), colorswitch);
+			glm::value_ptr(proj));
 
-		Draw(gallery.GetShader("SimpleCamera"), gallery.GetObject("Sphere"),
+		/*Draw(gallery.GetShader("SimpleCamera"), gallery.GetObject("Sphere"),
 			glm::value_ptr(model2),
 			glm::value_ptr(view),
-			glm::value_ptr(proj), colorswitch);
+			glm::value_ptr(proj), colorswitch);*/
 
-		Draw(gallery.GetShader("SimpleCamera"), gallery.GetObject("Crystal"),
-			glm::value_ptr(model3),
-			glm::value_ptr(view),
-			glm::value_ptr(proj), colorswitch);
+	
 
 	}
 
