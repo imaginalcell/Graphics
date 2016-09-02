@@ -17,7 +17,7 @@ void main()
 	Time time;
 	Input input;
 
-	window.Init(1280, 720, "I got a title :^)");
+	window.Init(1280, 720, "I got a potato");
 	gallery.Init();
 	input.Init(window);
 	time.Init();
