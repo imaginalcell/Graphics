@@ -1,78 +1,33 @@
+#include <iostream>
+
+#include "Window.h"
 #include "crenderutils.h"
-#include "window.h"
-#include "Vertex.h"
+#include "Gallery.h"
 
-//this is my branch
-//there are many like it
-//but this branch is my branch
-
-//path for shaders
-//		../res/shaders/simpleFrag
-//		../res/shaders/simpleVert
 void main()
 {
 	Window window;
-	window.init();
+	Gallery gallery;
 
-	Vertex   vert[3] = { { 0,.5f,0,1, 1,0,0,1 },
-						{.5f,-.5f,0,1, 0,1,0,1},
-						{-.5f,-.5f,0,1, 0,1,1,1 }};
+	window.Init(800, 600, "I got a title :^)");
 
-	unsigned tris[3] = { 0,1,2 };
+	Vertex verts[] = { { 1,1,0,1 },{ 1,-1,0,1 },{ -1,-1,0,1 },{ -1,1,0,1 } };
+	unsigned tris[] = { 0,1,2, 2,3,0 };
 
-	const char vsource[] =
-		"#version 330\n"
-		"layout(location = 0)in vec4 position;"
-		"layout(location = 1)in vec4 color;"
-		"out vec4 vColor;"
-		"void main() {vColor = color; gl_Position = position;}";
+	gallery.MakeObject("quad", verts, 4, tris, 6);
 
-	const char fsource[] =
-		"#version 150\n"
-		"in vec4 vColor;"
-		"out vec4 outColor;"
-		"void main() {outColor = vColor;}";
+	gallery.LoadObjectOBJ("Sphere", "../res/models/sphere.obj");
+	gallery.LoadShader("Simple", "../res/shaders/SimpleVert.txt", "../res/shaders/SimpleFrag.txt");
 
-	Geometry geo = makeGeometry(vert , 3, tris, 3);
-	Shader	 shade = makeShader(vsource, fsource);
+	float time = 0;
 
-	Shader shadow = loadShader("../res/shaders/simpleVert.txt","../res/shaders/simpleFrag.txt");
-
-
-	Vertex n00b[3] = {  {0,.5f,0,1, 0,1,1,1,}, 
-						{.5f,-.5f,0,1, 1,0,0,1}, 
-						{.5,.5f,0,1, 1,1,0,1} };
-
-	unsigned neeb[3] = {0,1,2};
-
-	const char sourcev[] =
-		"#version 330\n"
-		"layout(location =0)in vec4 pos;"
-		"layout(location =1)in vec4 col;"
-		"out vec4 vCol;"
-		"void main() {vCol = col; gl_Position = pos;}";
-
-	const char sourcef[] =
-		"#version 150\n"
-		"in vec4 vCol;"
-		"out vec4 outCol;"
-		"void main() {outCol = vCol;}";
-
-	Geometry joker = makeGeometry(n00b,3,neeb,3);
-	Shader batman = makeShader(sourcev, sourcef);
-
-	while (window.step())
+	while (window.Step())
 	{
-		draw(geo, shade);
-		draw(joker, batman);
+		time += 0.0016667f;
+		//Draw(gallery.GetShader("Simple"), gallery.GetObject("Sphere"), time);
+		Draw(gallery.GetShader("Simple"), gallery.GetObject("quad"), time);
 	}
-	//first
-	freeGeometry(geo);
-	freeShader(shade);
-	//second
-	freeGeometry(joker);
-	freeShader(batman);
 
-	window.term();
-	return;
+	gallery.Term();
+	window.Term();
 }

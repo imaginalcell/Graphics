@@ -3,15 +3,16 @@
 class Window
 {
 private:
+	friend class Input;
 	int width, height;
 	char title[64];
 	bool isInitialized = false;
 
-	//forward declare
+	//Forward Declaring
 	struct GLFWwindow *winHandle = nullptr;
 
 public:
-	bool init(int a_width = 800, int a_height = 600, char *a_title = "I am a Potato"); //start, setup
-	bool step(); //update, refresh
-	bool term(); //kill, terminate , DieDieDie
+	bool Init(int A_Width = 800, int A_Height = 600, char *A_Title = "I need a title");
+	bool Step();
+	bool Term();
 };

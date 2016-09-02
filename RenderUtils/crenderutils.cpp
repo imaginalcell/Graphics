@@ -1,145 +1,59 @@
-#define GLEW_STATIC
-
-#include "GLEW\glew.h"
-#include "GLFW\glfw3.h"
-#include "Vertex.h"
+#define TINYOBJLOADER_IMPLEMENTATION
+#include "Obj\tiny_obj_loader.h"
+#include <random>
+#include "gldecs.h"
 #include "crenderutils.h"
-#include <cstdio>
+#include "Vertex.h"
+#include <cstring>
+#include <fstream>
+#include <iostream>
+#include <string>
 
-Geometry makeGeometry(const Vertex * verts, size_t vsize, const unsigned int * tris, size_t tsize)
+Geometry MakeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tris, size_t tsize)
 {
 	Geometry retval;
-	
-	//define the var
-	glGenBuffers(1, &retval.vbo);
-	glGenBuffers(1, &retval.ibo);
-	glGenVertexArrays(1, &retval.vao);
-	
-	//scope the var
-	glBindVertexArray(retval.vao);
-	glBindBuffer(GL_ARRAY_BUFFER, retval.vbo); //scope our vertices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, retval.ibo);// scope triangles
+	retval.size = tsize;
 
-	//init the var
-		//new flaot [4]
+	//Define the variables
+	glGenBuffers(1, &retval.vbo); //store vertices
+	glGenBuffers(1, &retval.ibo); //store indices(triangle)
+	glGenVertexArrays(1, &retval.vao); //store attribute information
+
+									   //Scope the variables
+	glBindVertexArray(retval.vao);
+	glBindBuffer(GL_ARRAY_BUFFER, retval.vbo);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, retval.ibo);
+
+	//Initialize the variables
 	glBufferData(GL_ARRAY_BUFFER, vsize * sizeof(Vertex), verts, GL_STATIC_DRAW);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, tsize * sizeof(unsigned), tris, GL_STATIC_DRAW);
 
-	//attributes
+	//attribute let us tell openGL how the memory is laid out
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 
+	//index of the attribute, number of elements, type, normalized?
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (const void*)16);
 
-	//unscope the var
+	//Unscope the variables
 	glBindVertexArray(0);
-	glBindBuffer(GL_ARRAY_BUFFER ,0);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER ,0);
-	retval.size = tsize;
+	glBindBuffer(GL_ARRAY_BUFFER, 0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+
+
 	return retval;
 }
 
-void freeGeometry(Geometry &geo)
+void FreeGeometry(Geometry &geo)
 {
 	glDeleteBuffers(1, &geo.vbo);
 	glDeleteBuffers(1, &geo.ibo);
-	glDeleteVertexArrays(1, &geo.vao);
-
-	geo = { 0,0,0,0 };
+	glDeleteBuffers(1, &geo.vao);
+	geo = { 0, 0, 0, 0 };
 }
 
-Shader makeShader(const char * vsource, const char * fsource)
-{
-	Shader retval;
-
-	retval.handle = glCreateProgram();
-	//create our var
-	unsigned vs = glCreateShader(GL_VERTEX_SHADER);
-	unsigned fs = glCreateShader(GL_FRAGMENT_SHADER);
-	//init our var
-	glShaderSource(vs, 1, &vsource, 0);
-	glShaderSource(fs, 1, &fsource, 0);
-	//compile shader
-	glCompileShader(vs);
-	glCompileShader(fs);
-	//link the shaders into a single program
-	glAttachShader(retval.handle, vs);
-	glAttachShader(retval.handle, fs);
-	glLinkProgram(retval.handle);
-	//no longer need em
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return retval;
-}
-
-long copyFileToArray(char *dest, size_t dlen, const char *path)
-{
-	FILE *fp;
-	fopen_s(&fp, path, "r");	// open file	
-	if (!fp) return 0;
-
-	fseek(fp, 0L, SEEK_END);		// jump to end of file
-	long size = ftell(fp);			// determine how many chars we passed
-	rewind(fp);						// go back to beginning
-
-	long lastIndex = fread_s(dest, dlen, 1, size, fp);
-
-	dest[lastIndex] = 0;
-
-	fclose(fp);
-	return size;
-}
-
-#include <fstream>
-#include <istream>
-#include <string>
-
-std::string cppStyleFileToString(const char *path)
-{
-	std::ifstream infile{ path };
-	std::string file_contents{ std::istreambuf_iterator<char>(infile),
-		std::istreambuf_iterator<char>() };
-	return file_contents;
-}
-
-Shader loadShader(const char * vpath, const char * fpath)
-{
-	char vsource[5012]; //max of 5012 characters in source
-	char fsource[5012];	//will probably change that later
-
-	copyFileToArray(vsource, 5012, vpath);
-	copyFileToArray(fsource, 5012, fpath);
-
-	std::string vs = cppStyleFileToString(vpath);
-	std::string fs = cppStyleFileToString(fpath);
-
-	const char *vCode = vs.c_str(), *fCode = fs.c_str();
-
-	return makeShader(vCode,fCode);
-}
-
-void freeShader(Shader &slade)
-{
-	glDeleteProgram(slade.handle);
-	slade.handle = 0;
-}
-
-void draw(const Geometry &geo, const Shader &sad)
-{
-	glUseProgram(sad.handle);
-	glBindVertexArray(geo.vao);
-
-	glDrawElements(GL_TRIANGLES, geo.size, GL_UNSIGNED_INT, 0);
-
-}
-
-#define TINYOBJLOADER_IMPLEMENTATION // define this in only *one* .cc
-#include "OBJ\tiny_obj_loader.h"
-#include <random>
-
-Geometry loadOBJ(const char *path)
+Geometry LoadObj(const char *path)
 {
 	tinyobj::attrib_t attrib;
 	std::vector<tinyobj::shape_t> shapes;
@@ -166,11 +80,100 @@ Geometry loadOBJ(const char *path)
 	for (int i = 0; i < shapes[0].mesh.indices.size(); ++i)
 		tris[i] = shapes[0].mesh.indices[i].vertex_index;
 
-	Geometry retval = makeGeometry(verts, attrib.vertices.size() / 3,
+	Geometry retval = MakeGeometry(verts, attrib.vertices.size() / 3,
 		tris, shapes[0].mesh.indices.size());
 
 	delete[] verts;
 	delete[] tris;
-	// then we can call makeGeometry as per normal.
+
 	return retval;
+}
+
+Shader MakeShader(const char * vsource, const char * fsource)
+{
+	Shader retval;
+
+	retval.handle = glCreateProgram();
+	unsigned vs = glCreateShader(GL_VERTEX_SHADER);
+	unsigned fs = glCreateShader(GL_FRAGMENT_SHADER);
+
+	glShaderSource(vs, 1, &vsource, 0);
+	glShaderSource(fs, 1, &fsource, 0);
+
+	glCompileShader(vs);
+	glCompileShader(fs);
+
+	glAttachShader(retval.handle, vs);
+	glAttachShader(retval.handle, fs);
+	glLinkProgram(retval.handle);
+
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+
+	return retval;
+}
+
+void FreeShader(Shader &shader)
+{
+	glDeleteProgram(shader.handle);
+	shader.handle = 0;
+}
+
+std::string GetTextFromFile(const char *path)
+{
+	std::ifstream textFile{ path };
+	std::string file_contents
+	{
+		std::istreambuf_iterator<char>(textFile),
+		std::istreambuf_iterator<char>()
+	};
+	return file_contents;
+}
+
+Shader LoadShader(const char *vpath, const char *fpath)
+{
+	return MakeShader(GetTextFromFile(vpath).c_str(), GetTextFromFile(fpath).c_str());
+}
+
+void Draw(const Shader &shader, const Geometry &geometry)
+{
+	glUseProgram(shader.handle);
+
+	//binding the vao also binds the IBO(tri) and VBO (verts)
+	glBindVertexArray(geometry.vao);
+
+	//Draw elements will draw the vertices that are currently bound
+	//Using an array of indices
+	//If an IBO is bound, we don't need to provide any indices
+	glDrawElements(GL_TRIANGLES, geometry.size, GL_UNSIGNED_INT, 0);
+}
+
+void Draw(const Shader &shader, const Geometry &geometry, float time)
+{
+	glUseProgram(shader.handle);
+	glBindVertexArray(geometry.vao);
+
+	int loc = glGetUniformLocation(shader.handle, "time");
+	glUniform1f(loc, time);
+
+	glDrawElements(GL_TRIANGLES, geometry.size, GL_UNSIGNED_INT, 0);
+}
+
+void Draw(const Shader &s, const Geometry &g, const float m[16], const float v[16], const float p[16], float color2)
+{
+	glEnable(GL_CULL_FACE);
+	glDisable(GL_DEPTH_TEST);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	glUseProgram(s.handle);
+	glBindVertexArray(g.vao);
+
+	glUniformMatrix4fv(0, 1, GL_FALSE, p);
+	glUniformMatrix4fv(1, 1, GL_FALSE, v);
+	glUniformMatrix4fv(2, 1, GL_FALSE, m);
+
+	int loc = glGetUniformLocation(s.handle, "color2");
+	glUniform1f(loc, color2);
+
+	glDrawElements(GL_TRIANGLES, g.size, GL_UNSIGNED_INT, 0);
 }

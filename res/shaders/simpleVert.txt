@@ -15,9 +15,13 @@ uniform float time = 0.0;
 void main()
 {
 	vColor = color;
+
 	vPosition = position;
+
 	gl_Position = position;
 
-
 	gl_Position.y += cos(time + position.x)/2;
+
+
+	//gl_Position.y += cos(time + position.x)/2;
 }

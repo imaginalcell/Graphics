@@ -1,18 +1,23 @@
 #pragma once
+#include <iostream>
+#include "Globjects.h"
 
-#include "globjects.h"
+Geometry MakeGeometry(const struct Vertex *verts, size_t vsize, const unsigned int *tris, size_t tsize);
 
-Geometry makeGeometry(const struct Vertex *verts, size_t vsize,
-						const unsigned int *tris, size_t tsize);
+void FreeGeometry(Geometry &);
 
-void freeGeometry(Geometry &);
+Geometry LoadObj(const char *path);
 
-Geometry loadOBJ(const char *path);
+Shader MakeShader(const char *vsource, const char *fsource);
 
-Shader makeShader(const char *vsource, const char *fsource);
+std::string GetTextFromFile(const char *path);
 
-Shader loadShader(const char *vpath, const char *fpath);
+void FreeShader(Shader &);
 
-void freeShader(Shader &);
+Shader LoadShader(const char *vpath, const char *fpath);
 
-void draw(const Geometry &, const Shader &);
+void Draw(const Shader &, const Geometry &);
+
+void Draw(const Shader &, const Geometry &, float time);
+
+void Draw(const Shader &, const Geometry &, const float m[16], const float v[16], const float p[16], float color2);
