@@ -9,7 +9,7 @@ void main()
 	Window window;
 	Gallery gallery;
 
-	window.Init(800, 600, "I got a title :^)");
+	window.Init(800, 600, "I got a potato");
 
 	Vertex verts[] = { { 1,1,0,1 },{ 1,-1,0,1 },{ -1,-1,0,1 },{ -1,1,0,1 } };
 	unsigned tris[] = { 0,1,2, 2,3,0 };
