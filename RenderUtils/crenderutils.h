@@ -17,6 +17,7 @@ void FreeShader(Shader &);
 Shader LoadShader(const char *vpath, const char *fpath);
 
 Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsigned char * pixel);
+Texture makeTextureF(unsigned square, const float *pixels);
 Texture loadTexture(const char * path);
 void freeTexture(Texture &t);
 

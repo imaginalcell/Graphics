@@ -32,8 +32,8 @@ Geometry MakeGeometry(const Vertex *verts, size_t vsize, const unsigned int *tri
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, tsize * sizeof(unsigned), tris, GL_STATIC_DRAW);
 
 	//attribute let us tell openGL how the memory is laid out
-	glEnableVertexAttribArray(0);
-	glEnableVertexAttribArray(1);
+	glEnableVertexAttribArray(0);//pos
+	glEnableVertexAttribArray(1);//color
 
 	//index of the attribute, number of elements, type, normalized?
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
@@ -152,6 +152,23 @@ Texture makeTexture(unsigned width, unsigned height, unsigned format, const unsi
 
 	glBindTexture(GL_TEXTURE_2D, 0);
 
+	return retval;
+}
+
+Texture makeTextureF(unsigned square, const float * pixels)
+{
+	Texture retval = { 0, square, square, GL_RED };
+	glGenTextures(1, &retval.handle);
+	glBindTexture(GL_TEXTURE_2D, retval.handle);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_R32F, square, square, 0, GL_RED, GL_FLOAT, pixels);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+	glBindTexture(GL_TEXTURE_2D, 0);
 	return retval;
 }
 
