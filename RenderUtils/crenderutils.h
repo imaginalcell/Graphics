@@ -28,3 +28,6 @@ void Draw(const Shader &, const Geometry &, float time);
 void Draw(const Shader &, const Geometry &, const float m[16], const float v[16], const float p[16], float color2);
 
 void Draw(const Shader &s, const Geometry &g, const Texture &t, const float m[16], const float v[16], const float p[16]);
+
+void drawPhong(const Shader &s, const Geometry &g,
+	const float M[16], const float V[16], const float P[16]);
