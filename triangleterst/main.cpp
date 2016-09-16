@@ -1,4 +1,4 @@
-#include <iostream>
+/*#include <iostream>
 
 #include "Window.h"
 #include "crenderutils.h"
@@ -30,4 +30,27 @@ void main()
 
 	gallery.Term();
 	window.Term();
+}*/
+
+#include "crenderutils.h"
+
+void main()
+{
+	Window context;
+	context.Init(1280, 720);
+
+	Framebuffer screen = { 0,1280,720 };
+
+	Geometry quad = MakeGeometry(quad_verts, 4,
+		quad_tris, 6);
+
+	Shader simple = LoadShader("../res/shaders/simple.vert",
+		"../res/shaders/simple.frag");
+
+	while (context.Step())
+	{
+		tdraw(simple, quad, screen);
+	}
+
+	context.Term();
 }

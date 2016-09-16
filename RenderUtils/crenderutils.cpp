@@ -112,7 +112,7 @@ Shader MakeShader(const char * vsource, const char * fsource)
 
 	glAttachShader(retval.handle, vs);
 	glAttachShader(retval.handle, fs);
-	glLinkProgram(retval.handle);
+	glog_glLinkProgram(retval.handle);
 
 	glDeleteShader(vs);
 	glDeleteShader(fs);
@@ -139,6 +139,7 @@ std::string GetTextFromFile(const char *path)
 
 Shader LoadShader(const char *vpath, const char *fpath)
 {
+	glog(vpath,fpath);
 	return MakeShader(GetTextFromFile(vpath).c_str(), GetTextFromFile(fpath).c_str());
 }
 
@@ -178,6 +179,8 @@ Texture makeTextureF(unsigned square, const float * pixels)
 
 Texture loadTexture(const char * path)
 {
+	glog("loading Texture", path);
+
 	Texture retval = { 0,0,0,0 };
 
 	stbi_set_flip_vertically_on_load(true);

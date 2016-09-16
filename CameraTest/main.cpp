@@ -113,8 +113,8 @@ void main()
 	glm::mat4 modelC, modelS;
 
 	Geometry soulspear = LoadObj("../res/models/soulspear.obj");
-	Shader shader = LoadShader("../res/shaders/phongVert.txt",
-		"../res/shaders/phongFrag.txt");
+	Shader shader = LoadShader("../res/shaders/phongVert.glsl",
+		"../res/shaders/phongFrag.glsl");
 
 	Texture tarray[] = { loadTexture("..res/textures/soulspear_diffuse.tga"),
 	loadTexture("../res/textures/soulspear_specular.tga"),
@@ -138,7 +138,7 @@ void main()
 	float time = 0;
 	while (window.Step())
 	{
-		clearFramebuffer(frame);
+		//clearFramebuffer(frame);
 		input.Step();
 		time += 0.016f;
 		modelC = glm::rotate(time, glm::normalize(glm::vec3(0, 1, 0)));
@@ -149,16 +149,16 @@ void main()
 			glm::value_ptr(proj),
 			tarray, 3);
 
-		drawFB(shader, soulspear, frame,
+		/*drawFB(shader, soulspear, frame,
 			glm::value_ptr(modelC),
 			glm::value_ptr(view),
 			glm::value_ptr(proj),
-			tarray, 3);
+			tarray, 3);*/
 
-		drawFB(post, quad, screen, glm::value_ptr(glm::mat4(time)),
-			glm::value_ptr(glm::mat4()),
-			glm::value_ptr(glm::mat4()),
-			frame.colors, frame.nColors);
+		//drawFB(post, quad, screen, glm::value_ptr(glm::mat4(time)),
+		//	glm::value_ptr(glm::mat4()),
+		//	glm::value_ptr(glm::mat4()),
+		//	frame.colors, frame.nColors);
 	}
 	freeFramebuffer(frame);
 	FreeShader(shader);

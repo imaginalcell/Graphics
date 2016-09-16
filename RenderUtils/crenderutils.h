@@ -1,6 +1,7 @@
 #pragma once
 #include <iostream>
 #include "Globjects.h"
+#include "window.h"
 
 Geometry MakeGeometry(const struct Vertex *verts, size_t vsize, const unsigned int *tris, size_t tsize);
 
