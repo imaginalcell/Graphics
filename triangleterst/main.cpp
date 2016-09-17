@@ -33,6 +33,12 @@ void main()
 }*/
 
 #include "crenderutils.h"
+#include "window.h"
+#include "Input.h"
+#include "Vertex.h"
+
+#include "GLM\glm.hpp"
+#include "GLM\ext.hpp"
 
 void main()
 {
