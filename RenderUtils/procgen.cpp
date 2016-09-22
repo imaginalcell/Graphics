@@ -32,7 +32,7 @@ Geometry genGrid(unsigned sqr, float dim)
 			tris[index++]=(r+1) * sqr +c;//B R
 			tris[index++]=(r+1) * sqr +(c+1);//T R
 		}
-	Geometry retval = MakeGeometry(verts,vsize,tris,tsize);
+	Geometry retval = makeGeometry(verts,vsize,tris,tsize);
 
 	delete[] verts;
 	delete[] tris;

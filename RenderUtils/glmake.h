@@ -1,8 +1,7 @@
 #pragma once
 
-struct Geometry MakeGeometry(const struct Vertex *verts, size_t vsize,
+struct Geometry makeGeometry(const struct Vertex *verts, size_t vsize,
 	const unsigned int  *tris, size_t tsize);
-
 void freeGeometry(Geometry &);
 
 struct Shader MakeShader(const char *vsource, const char *fsource);

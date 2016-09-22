@@ -89,10 +89,10 @@ Geometry loadOBJ(const char *path)
 		tris[i] = i;
 	}
 
-	Geometry retval = MakeGeometry(verts, vsize, tris, vsize);
+	Geometry retval = makeGeometry(verts, vsize, tris, vsize);
 
 	delete[] verts;
 	delete[] tris;
-	// then we can call makeGeometry as per normal.
+	
 	return retval;
 }
